@@ -96,7 +96,7 @@ module Resque
 
         def fail!(e)
           self['succeeded'] = false
-          self['exception'] = e.to_s
+          self['exception'] = e.to_yaml
           finish!
         end
 
@@ -109,7 +109,11 @@ module Resque
         end
 
         def exception
-          self['exception']
+          if self['exception'].is_a? String
+            Yaml.load self['exception']
+          else
+            self['exception']
+          end
         end
 
         def seconds_enqueued
