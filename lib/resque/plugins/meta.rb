@@ -110,7 +110,7 @@ module Resque
 
       def on_failure_meta(e, meta_id, *args)
         if meta = get_meta(meta_id)
-          meta.fail!
+          meta.fail! e
         end
       end
     end

@@ -94,8 +94,9 @@ module Resque
           finished_at ? true : false
         end
 
-        def fail!
+        def fail!(e)
           self['succeeded'] = false
+          self['exception'] = e.to_s
           finish!
         end
 
@@ -105,6 +106,10 @@ module Resque
 
         def failed?
           finished? ? !self['succeeded'] : nil
+        end
+
+        def exception
+          self['exception']
         end
 
         def seconds_enqueued
