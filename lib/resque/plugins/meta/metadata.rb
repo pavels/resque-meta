@@ -79,7 +79,7 @@ module Resque
         end
 
         def enqueued?
-          !started?
+          !started? && !finished?
         end
 
         def working?
